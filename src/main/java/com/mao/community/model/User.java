@@ -3,7 +3,7 @@ package com.mao.community.model;
 public class User {
 
     private String accountid;
-    private String username;
+    private String name;
     private String token;
     private Long gmtcreate;
     private Long gmtmodified;
@@ -17,12 +17,12 @@ public class User {
         this.accountid = accountid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getToken() {
@@ -47,5 +47,16 @@ public class User {
 
     public void setGmtmodified(Long gmtmodified) {
         this.gmtmodified = gmtmodified;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "accountid='" + accountid + '\'' +
+                ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
+                ", gmtcreate=" + gmtcreate +
+                ", gmtmodified=" + gmtmodified +
+                '}';
     }
 }
