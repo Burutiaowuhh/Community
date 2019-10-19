@@ -1,0 +1,17 @@
+.main{
+    margin: 30px;
+    background-color: white;
+}
+.body-background{
+    background-image: url("img/bg.jpg");
+}
+.font-color{
+    color:white;
+}
+.nav-background-color{
+    background-color: #499ef3;
+}
+.btn-pubish{
+    float: right;
+    margin-bottom: 15px;
+}
