@@ -4,6 +4,7 @@ import com.mao.community.Mapper.QuestionMapper;
 import com.mao.community.Mapper.UserMapper;
 import com.mao.community.model.Question;
 import com.mao.community.model.User;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,29 +56,32 @@ public class PublishController {
 
         User user=null;
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if(cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                user=userMapper.findBytoken(token);
-                if(user!=null){
-                    request.getSession().setAttribute("user",user);
+        if(cookies!=null&&cookies.length!=0)
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    user = userMapper.findBytoken(token);
+                    if (user != null) {
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
                 }
-                break;
             }
-        }
-        if(user==null){
-            model.addAttribute("error","用户未登录");
-            return "publish";
-        }
 
-        Question question = new Question();
-        question.setTitle(title);
-        question.setDescription(description);
-        question.setTag(tag);
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        question.setCreator(Integer.valueOf(user.getAccountid()));
-        questionMapper.create(question);
-        return "redirect:/";
+            if (user == null) {
+                model.addAttribute("error", "用户未登录");
+                return "publish";
+            }
+
+            Question question = new Question();
+            question.setTitle(title);
+            question.setDescription(description);
+            question.setTag(tag);
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            question.setCreator(Integer.valueOf(user.getAccountid()));
+            questionMapper.create(question);
+            return "redirect:/";
+
     }
 }

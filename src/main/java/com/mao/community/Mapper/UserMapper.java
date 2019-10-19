@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Select;
 //private Long gmtmodified;
 @Mapper
 public interface UserMapper {
-    @Insert("insert into user (account_id,name,token,gmt_create,gmt_modified) values (#{accountid},#{name},#{token},#{gmtcreate},#{gmtmodified})")
+    @Insert("insert into user (account_id,name,token,gmt_create,gmt_modified,avatar_url) values (#{accountid},#{name},#{token},#{gmtcreate},#{gmtmodified},#{avatarUrl})")
     void insert(User user);        //#{}  会自动将方法里的model属性对应到#{}
 
     @Select("select account_id,name,token,gmt_create,gmt_modified from user where token = #{token}")
