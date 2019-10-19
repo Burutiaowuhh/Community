@@ -10,7 +10,7 @@
 </head>
 <body class="body-background">
 <nav class="navbar navbar-default">
-    <div class="container-fluid  nav-background-color" >
+    <div class="container-fluid  nav-background-color">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -29,11 +29,16 @@
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right ">
+                <li th:if="${session.user!=null}">
+                    <a href="/publish" style="color: white">发布</a>
+                </li>
                 <li th:if="${session.user==null}">
-                    <a style="color: white" href="https://github.com/login/oauth/authorize?client_id=3daee8956728aea3117c&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+                    <a style="color: white"
+                       href="https://github.com/login/oauth/authorize?client_id=3daee8956728aea3117c&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
                 </li>
                 <li class="dropdown" th:if="${session.user!=null}">
-                    <a style="color: white" href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true"
+                    <a style="color: white" href="#" class="dropdown-toggle " data-toggle="dropdown" role="button"
+                       aria-haspopup="true"
                        aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">消息中心</a></li>
@@ -51,19 +56,35 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true">发起</span></h2>
             <hr>
-            <div class="form-group">
-                <label for="title">问题标题（简单扼要）:</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="问题标题......">
-            </div>
-            <div class="form-group">
-                <label for="title">问题标题（简单扼要）:</label>
-                <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="title">输入标签，以逗号分隔</label>
-                <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签">
-            </div>
-            <button type="submit" class="btn btn-success btn-pubish">发布</button>
+
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="title">问题标题（简单扼要）:</label>
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="问题标题......">
+                </div>
+                <div class="form-group">
+                    <label for="description">问题标题（简单扼要）:</label>
+                    <textarea class="form-control" name="description" th:value="${description}" id="description" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tag">输入标签，以逗号分隔</label>
+                    <input type="text" class="form-control" id="tag" th:value="${tag}" name="tag" placeholder="添加标签">
+                </div>
+
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" role="alert"
+                             th:text="${error}" th:if="${error!=null}"></div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit"
+                                    class="btn btn-success btn-pubish">发布
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>问题发起指南</h3>
