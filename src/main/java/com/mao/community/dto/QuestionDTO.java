@@ -1,9 +1,10 @@
-package com.mao.community.model;
+package com.mao.community.dto;
 
+import com.mao.community.model.User;
 import lombok.Data;
 
 @Data
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -14,4 +15,5 @@ public class Question {
     private String tag;
     private String commentCount;
     private String likeCount;
+    private User user;
 }
