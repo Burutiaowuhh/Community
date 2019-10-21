@@ -1,9 +1,11 @@
 package com.mao.community.controller;
 
 import com.mao.community.Mapper.UserMapper;
+import com.mao.community.dto.PaginationDTO;
 import com.mao.community.dto.QuestionDTO;
 import com.mao.community.model.User;
 import com.mao.community.service.QuestionService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,9 @@ public class HelloController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
-                        Model model) {
+                        Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "size",defaultValue = "2") Integer size) {
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0)
@@ -48,8 +52,8 @@ public class HelloController {
                 }
             }
 
-        List<QuestionDTO> questionDTOList=questionService.list();
-        model.addAttribute("questions",questionDTOList);
+        PaginationDTO paginationDTO=questionService.list(page,size);
+        model.addAttribute("paginationDTO",paginationDTO);
         return "index";
     }
 }

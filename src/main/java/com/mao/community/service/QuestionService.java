@@ -2,10 +2,11 @@ package com.mao.community.service;
 
 import com.mao.community.Mapper.QuestionMapper;
 import com.mao.community.Mapper.UserMapper;
+import com.mao.community.dto.PaginationDTO;
 import com.mao.community.dto.QuestionDTO;
 import com.mao.community.model.Question;
 import com.mao.community.model.User;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,25 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<QuestionDTO> list() {
-        List<Question> questionList = questionMapper.list();
+    public PaginationDTO list(Integer page,Integer size)
+    {
+        PaginationDTO paginationDTO=new PaginationDTO();
         List<QuestionDTO> questionDTOList=new ArrayList<>();
+
+        Integer totalcount=questionMapper.findtotalCOunt();
+        paginationDTO.setPagination(totalcount,page,size);
+
+
+        if(page<1){
+            page=1;
+        }
+        if(page>paginationDTO.getTotalpage()){
+            page=paginationDTO.getTotalpage();
+        }
+
+        Integer offset=size*(page-1);
+        List<Question> questionList = questionMapper.list(offset,size);
+
         for (Question question : questionList) {
            User user= userMapper.findByid(question.getCreator());
            QuestionDTO questionDTO=new QuestionDTO();
@@ -32,6 +49,7 @@ public class QuestionService {
            questionDTO.setUser(user);
            questionDTOList.add(questionDTO);
         }
-        return questionDTOList;
+        paginationDTO.setQuestions(questionDTOList);
+        return paginationDTO;
     }
 }
