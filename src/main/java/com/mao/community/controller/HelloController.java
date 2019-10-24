@@ -27,16 +27,16 @@ public class HelloController {
     private QuestionService questionService;
 
     @GetMapping("/hello")
-    public String hello(@RequestParam(name = "name") String name, Model model){
-        model.addAttribute("name",name);
+    public String hello(@RequestParam(name = "name") String name, Model model) {
+        model.addAttribute("name", name);
         return "hello";
     }
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         Model model,
-                        @RequestParam(name = "page",defaultValue = "1") Integer page,
-                        @RequestParam(name = "size",defaultValue = "2") Integer size) {
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "2") Integer size) {
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0)
@@ -52,8 +52,13 @@ public class HelloController {
                 }
             }
 
-        PaginationDTO paginationDTO=questionService.list(page,size);
-        model.addAttribute("paginationDTO",paginationDTO);
+        PaginationDTO paginationDTO = questionService.list(page, size);
+        model.addAttribute("paginationDTO", paginationDTO);
         return "index";
+    }
+
+    @GetMapping("/player")
+    public String player() {
+        return "player";
     }
 }

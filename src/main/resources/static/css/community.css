@@ -1,26 +1,37 @@
-.main{
+.main {
     margin: 30px;
     background-color: white;
 }
-.body-background{
+
+.body-background {
     background-image: url("img/bg.jpg");
 }
-.font-color{
-    color:white;
+
+.font-color {
+    color: white;
 }
-.nav-background-color{
+
+.nav-background-color {
     background-color: #499ef3;
 }
-.btn-pubish{
+
+.btn-pubish {
     float: right;
     margin-bottom: 15px;
 }
-.text-style{
+
+.text-style {
     font-size: 12px;
     font-weight: normal;
     color: #999;
 }
-.media-object{
+
+.media-object {
     width: 40px;
     height: 40px;
 }
+.videosize{
+    width: 1000px;
+    height: 500px;
+}
+
