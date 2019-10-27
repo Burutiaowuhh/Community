@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>小鱼干社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/shownav.js" type="application/javascript"></script>
+</head>
+<body class="body-background">
+<div th:insert="~{navigtion :: shownav}"></div>
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2 th:text="${questionDTO.title}"></h2>
+            <span class="text-style">
+                作者：<span th:text="${questionDTO.user.name}"/>  |
+                发布时间：<span th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd HH:mm')}"/>  |
+                阅读数：<span th:text="${questionDTO.viewCount}"/>
+            </span>
+            <hr>
+            <span th:text="${questionDTO.description}"></span><br>
+            <hr>
+            <span >
+                <a class="glyphicon glyphicon-pencil icon-font-color"  th:href="@{'/publish/'+${questionDTO.id}}">编辑</a></span>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            这个信息
+        </div>
+    </div>
+</div>
+</body>
+</html>

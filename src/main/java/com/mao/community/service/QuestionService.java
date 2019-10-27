@@ -23,6 +23,7 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
+
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
@@ -70,5 +71,15 @@ public class QuestionService {
         }
         paginationDTO.setQuestions(questionDTOList);
         return paginationDTO;
+    }
+
+    public QuestionDTO getQuesinfo(Integer id) {
+
+        QuestionDTO questionDTO = new QuestionDTO();
+        Question question = questionMapper.findqQuesInfo(id);
+        BeanUtils.copyProperties(question, questionDTO);
+        User user = userMapper.findByid(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
     }
 }
