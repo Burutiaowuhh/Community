@@ -75,10 +75,23 @@ public class QuestionService {
     public QuestionDTO getQuesinfo(Integer id) {
 
         QuestionDTO questionDTO = new QuestionDTO();
-        Question question = questionMapper.findqQuesInfo(id);
+        Question question = questionMapper.findQuesInfoById(id);
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.findByid(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
+    }
+
+    public void createorupdate(Question question) {
+        if(question.getId()==null){
+            //创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        }else {
+            //更新
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.update(question);
+        }
     }
 }
