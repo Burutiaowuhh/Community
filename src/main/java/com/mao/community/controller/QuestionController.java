@@ -25,7 +25,10 @@ public class QuestionController {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录");
-            return "publish";
+            QuestionDTO questionDTO= questionService.getQuesinfo(id);
+            System.out.println(questionDTO);
+            model.addAttribute("questionDTO",questionDTO);
+            return "question";
         }
         QuestionDTO questionDTO= questionService.getQuesinfo(id);
         System.out.println(questionDTO);

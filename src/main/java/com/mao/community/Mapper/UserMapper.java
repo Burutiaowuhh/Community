@@ -1,10 +1,7 @@
 package com.mao.community.Mapper;
 
 import com.mao.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 
 //private String accountid;
@@ -22,4 +19,10 @@ public interface UserMapper {
 
     @Select("select * from user where id=#{id}")
     User findByid(@Param("id") Integer id);
+
+    @Select("select * from user where account_id=#{accountid}")
+    User findByAccountid(@Param("accountid") String accountid);
+
+    @Update("update user set name=#{name},token=#{token},gmt_modified=#{gmtmodified},avatar_url=#{avatarUrl} where id=#{id}")
+    void updateuser(User user);
 }

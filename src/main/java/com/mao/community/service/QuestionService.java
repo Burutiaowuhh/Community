@@ -6,7 +6,6 @@ import com.mao.community.dto.PaginationDTO;
 import com.mao.community.dto.QuestionDTO;
 import com.mao.community.model.Question;
 import com.mao.community.model.User;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class QuestionService {
         PaginationDTO paginationDTO = new PaginationDTO();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
-        Integer totalcount = questionMapper.findtotalCOunt();
+        Integer totalcount = questionMapper.findtotalcount();
         paginationDTO.setPagination(totalcount, page, size);
 
 
