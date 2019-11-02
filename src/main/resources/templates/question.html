@@ -25,7 +25,8 @@
             <span th:text="${questionDTO.description}"></span><br>
             <hr>
             <span>
-                <a class="glyphicon glyphicon-pencil icon-font-color"  th:href="@{'/publish/'+${questionDTO.id}}" th:if="${session.user!=null&&session.user.id==questionDTO.creator}">编辑</a></span>
+                <a class="glyphicon glyphicon-pencil icon-font-color" th:href="@{'/publish/'+${questionDTO.id}}"
+                   th:if="${session.user!=null&&session.user.id==questionDTO.creator}">编辑</a></span>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h4>发起人</h4>
@@ -36,7 +37,7 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" >
+                    <h4 class="media-heading">
                         <span th:text="${questionDTO.user.name}"></span>
                     </h4>
                 </div>

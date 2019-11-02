@@ -18,21 +18,21 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name="id") Integer id,
+    public String question(@PathVariable(name = "id") Integer id,
                            HttpServletRequest request,
-                           Model model){
+                           Model model) {
 
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录");
-            QuestionDTO questionDTO= questionService.getQuesinfo(id);
+            QuestionDTO questionDTO = questionService.getQuesinfo(id);
             System.out.println(questionDTO);
-            model.addAttribute("questionDTO",questionDTO);
+            model.addAttribute("questionDTO", questionDTO);
             return "question";
         }
-        QuestionDTO questionDTO= questionService.getQuesinfo(id);
+        QuestionDTO questionDTO = questionService.getQuesinfo(id);
         System.out.println(questionDTO);
-        model.addAttribute("questionDTO",questionDTO);
+        model.addAttribute("questionDTO", questionDTO);
         return "question";
     }
 }

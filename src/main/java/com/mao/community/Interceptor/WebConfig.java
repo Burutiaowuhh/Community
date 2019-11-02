@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 //@EnableWebMvc
+/*
+用于重复验证登录状态
+ */
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired

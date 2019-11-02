@@ -30,19 +30,23 @@
     width: 40px;
     height: 40px;
 }
-.videosize{
+
+.videosize {
     width: 1000px;
     height: 500px;
 }
+
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
     background: cornflowerblue;
 }
-.profile .section{
+
+.profile .section {
     margin-top: 15px;
 }
-.icon-font-color{
+
+.icon-font-color {
     color: #999999;
     font-size: 13px;
 }
