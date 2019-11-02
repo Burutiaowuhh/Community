@@ -4,6 +4,8 @@ import com.mao.community.Mapper.QuestionMapper;
 import com.mao.community.Mapper.UserMapper;
 import com.mao.community.dto.PaginationDTO;
 import com.mao.community.dto.QuestionDTO;
+import com.mao.community.exception.CustomizeErrorCode;
+import com.mao.community.exception.CustomizeException;
 import com.mao.community.model.Question;
 import com.mao.community.model.QuestionExample;
 import com.mao.community.model.User;
@@ -87,14 +89,11 @@ public class QuestionService {
     public QuestionDTO getQuesinfo(Integer id) {
 
         QuestionDTO questionDTO = new QuestionDTO();
-
-//        QuestionExample questionExample1 = new QuestionExample();
-//        questionExample1.createCriteria()
-//                .andIdEqualTo(id);
-
         Question question = questionMapper.selectByPrimaryKey(id);
-//        List<Question> questions = questionMapper.selectByExample(questionExample1);
-//        Question question = questionMapper.findQuesInfoById(id);
+
+        if(question==null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
@@ -120,7 +119,10 @@ public class QuestionService {
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updatequestion, example);
+            int i = questionMapper.updateByExampleSelective(updatequestion, example);
+            if(i!=1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
 //            questionMapper.update(question);
         }
     }
