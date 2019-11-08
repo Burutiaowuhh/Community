@@ -1,5 +1,6 @@
 package com.mao.community.service;
 
+import com.mao.community.Mapper.QuestionExtMapper;
 import com.mao.community.Mapper.QuestionMapper;
 import com.mao.community.Mapper.UserMapper;
 import com.mao.community.dto.PaginationDTO;
@@ -26,16 +27,17 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+
+    public PaginationDTO list(Integer page, Integer size) {//用于获取首页index页面信息
         PaginationDTO paginationDTO = new PaginationDTO();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
-
-        Integer count =(int)questionMapper.countByExample(new QuestionExample());
+        Integer count =(int)questionMapper.countByExample(new QuestionExample());//获取问题总数
 //        Integer totalcount = questionMapper.findtotalcount();
-        paginationDTO.setPagination(count, page, size);
-
+        paginationDTO.setPagination(count, page, size);  //用于获取页码信息
 
         if (page < 1) {
             page = 1;
@@ -44,7 +46,8 @@ public class QuestionService {
             page = paginationDTO.getTotalpage();
         }
 
-        Integer offset = size * (page - 1);
+        Integer offset = size * (page - 1);  //计算偏移量
+        //分页sql语句
         List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
 //        List<Question> questionList = questionMapper.list(offset, size);
 
@@ -65,10 +68,11 @@ public class QuestionService {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer offset = size * (page - 1);
         QuestionExample questionExample = new QuestionExample();
-        questionExample.createCriteria().andCreatorEqualTo(user.getId());
+        questionExample.createCriteria()
+                .andCreatorEqualTo(user.getId());
         int totalcount = (int)questionMapper.countByExample(questionExample);
 //        Integer totalcount = questionMapper.findtotalCOuntbyuser(user.getId());
-        paginationDTO.setPagination(totalcount, page, size);
+        paginationDTO.setPagination(totalcount, page, size);//获取页码信息
 
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         QuestionExample questionExample1 = new QuestionExample();
@@ -86,7 +90,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO getQuesinfo(Integer id) {
+    public QuestionDTO getQuesinfo(Integer id) {      //根据问题id获取问题详细信息和用户详细信息，返回一个QuestionDTO对象
 
         QuestionDTO questionDTO = new QuestionDTO();
         Question question = questionMapper.selectByPrimaryKey(id);
@@ -100,22 +104,22 @@ public class QuestionService {
         return questionDTO;
     }
 
-    public void createorupdate(Question question) {
-        if (question.getId() == null) {
+    public void createorupdate(Question question) {  //问题的创建或更新
+        if (question.getId() == null) {              //如果问题不存在
             //创建
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.insert(question);
+            questionMapper.insertSelective(question);
 //            questionMapper.create(question);
         } else {
             //更新
             question.setGmtModified(question.getGmtCreate());
-
             Question updatequestion = new Question();
             updatequestion.setGmtModified(System.currentTimeMillis());
             updatequestion.setTitle(question.getTitle());
             updatequestion.setDescription(question.getDescription());
             updatequestion.setTag(question.getTag());
+            //对问题进行更新
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
@@ -125,5 +129,20 @@ public class QuestionService {
             }
 //            questionMapper.update(question);
         }
+    }
+
+    public void incView(Integer id) {    //阅读数更新功能
+//        Question question = questionMapper.selectByPrimaryKey(id);
+//        Question updateQuestion=new Question();
+//        updateQuestion.setViewCount(question.getViewCount()+1);
+//        QuestionExample questionExample = new QuestionExample();
+//        questionExample.createCriteria()
+//                .andIdEqualTo(id);
+//        questionMapper.updateByExampleSelective(updateQuestion, questionExample);
+
+        Question record = new Question();
+        record.setId(id);
+        record.setViewCount(1);
+        questionExtMapper.incView(record);   //利用自定义mapper实现阅读数更新功能
     }
 }

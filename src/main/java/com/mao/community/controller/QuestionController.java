@@ -25,13 +25,12 @@ public class QuestionController {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录");
-            QuestionDTO questionDTO = questionService.getQuesinfo(id);
-            System.out.println(questionDTO);
+            QuestionDTO questionDTO = questionService.getQuesinfo(id);//根据id获取问题、用户信息
             model.addAttribute("questionDTO", questionDTO);
             return "question";
         }
-        QuestionDTO questionDTO = questionService.getQuesinfo(id);
-        System.out.println(questionDTO);
+        questionService.incView(id);   //更新阅读数
+        QuestionDTO questionDTO = questionService.getQuesinfo(id);//根据id获取问题、用户信息
         model.addAttribute("questionDTO", questionDTO);
         return "question";
     }
