@@ -90,7 +90,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO getQuesinfo(Integer id) {      //根据问题id获取问题详细信息和用户详细信息，返回一个QuestionDTO对象
+    public QuestionDTO getQuesinfo(Long id) {      //根据问题id获取问题详细信息和用户详细信息，返回一个QuestionDTO对象
 
         QuestionDTO questionDTO = new QuestionDTO();
         Question question = questionMapper.selectByPrimaryKey(id);
@@ -131,18 +131,11 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {    //阅读数更新功能
-//        Question question = questionMapper.selectByPrimaryKey(id);
-//        Question updateQuestion=new Question();
-//        updateQuestion.setViewCount(question.getViewCount()+1);
-//        QuestionExample questionExample = new QuestionExample();
-//        questionExample.createCriteria()
-//                .andIdEqualTo(id);
-//        questionMapper.updateByExampleSelective(updateQuestion, questionExample);
-
+    public void incView(Long id) {    //阅读数更新功能
         Question record = new Question();
         record.setId(id);
         record.setViewCount(1);
         questionExtMapper.incView(record);   //利用自定义mapper实现阅读数更新功能
     }
+
 }

@@ -21,9 +21,6 @@ import java.util.List;
 public class HelloController {
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private QuestionService questionService;
 
     @GetMapping("/hello")

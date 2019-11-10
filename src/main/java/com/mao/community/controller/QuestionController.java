@@ -18,11 +18,12 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name = "id") Integer id,
+    public String question(@PathVariable(name = "id") Long id,
                            HttpServletRequest request,
                            Model model) {
 
         User user = (User) request.getSession().getAttribute("user");
+        System.out.println(user.toString());
         if (user == null) {
             model.addAttribute("error", "用户未登录");
             QuestionDTO questionDTO = questionService.getQuesinfo(id);//根据id获取问题、用户信息

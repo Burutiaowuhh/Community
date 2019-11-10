@@ -33,7 +33,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 //                    User user = userMapper.findBytoken(token);
                     if (users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
-//                        System.out.println(users.get(0));
+//                        System.out.println("user="+users.get(0).toString());
                     }
                     break;
                 }
