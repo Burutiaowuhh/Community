@@ -10,13 +10,16 @@ import com.mao.community.exception.CustomizeException;
 import com.mao.community.model.Question;
 import com.mao.community.model.QuestionExample;
 import com.mao.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -48,7 +51,9 @@ public class QuestionService {
 
         Integer offset = size * (page - 1);  //计算偏移量
         //分页sql语句
-        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offset, size));
 //        List<Question> questionList = questionMapper.list(offset, size);
 
         for (Question question : questionList) {
@@ -138,4 +143,22 @@ public class QuestionService {
         questionExtMapper.incView(record);   //利用自定义mapper实现阅读数更新功能
     }
 
+    public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
+        if(StringUtils.isBlank(queryDTO.getTag())){
+            return new ArrayList<>();
+        }
+        //将逗号换成|号，sql语句正则表达式
+        String[] tags = StringUtils.split(queryDTO.getTag(), ",");
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));//格式形如java|spring|springmvc
+        Question question=new Question();
+        question.setId(queryDTO.getId());
+        question.setTag(regexpTag);
+        List<Question> questions = questionExtMapper.selectRelated(question);   //相关问题列表
+        List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q, questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+        return questionDTOS;
+    }
 }

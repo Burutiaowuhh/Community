@@ -29,9 +29,19 @@
                 <hr>
                 <span th:text="${questionDTO.description}"></span><br>
                 <hr>
+
+                <!--标签-->
+                <span class="label label-info question-tag" th:each="tag:${questionDTO.tag.split(',')}">
+                    <span class="glyphicon glyphicon-tag"></span>
+                    <span class="label label-info tag-padding-left-right" th:text="${tag}"></span>
+                </span>
+
+                <hr style="margin-bottom: 5px">
+                <!--编辑-->
                 <span>
                 <a class="glyphicon glyphicon-pencil icon-font-color" th:href="@{'/publish/'+${questionDTO.id}}"
-                   th:if="${session.user!=null&&session.user.id==questionDTO.creator}">编辑</a></span>
+                   th:if="${session.user!=null&&session.user.id==questionDTO.creator}">编辑</a>
+                </span>
                 <!--<hr style="margin-bottom: 5px">-->
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -101,7 +111,7 @@
 
             <!--回复-->
             <div id="replaysection" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px">
-                <span><h3>提交回复</h3></span>
+                <span><h3 style="margin-top: 10px">提交回复</h3></span>
                 <hr>
                 <div class="media">
                     <div class="media-left">
@@ -135,6 +145,18 @@
                         <span th:text="${questionDTO.user.name}"></span>
                     </h4>
                 </div>
+            </div>
+            <hr>
+            <h4>今日放送</h4>
+            <img class="show-image img-thumbnail" src="/img/default.jpg">
+            <hr>
+            <div>
+                <h4>相关问题</h4>
+                <ul class="question-related" >
+                    <li th:each="relatedquestion:${relatedQuestions}">
+                        <a  th:href="@{'/question/'+${relatedquestion.id}}" th:text="${relatedquestion.title}"></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

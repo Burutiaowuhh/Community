@@ -39,6 +39,8 @@ public class QuestionController {
             defaultUser.setAvatarUrl("/img/default.jpg");
             List<CommentDTO> commentDTOs= commentService.ListByTargetId(id, CommentTypeEnum.QUESTION);
             QuestionDTO questionDTO = questionService.getQuesinfo(id);//根据id获取问题、用户信息
+            List<QuestionDTO> relatedQuestions=questionService.selectRelated(questionDTO);//获取相关问题信息
+            model.addAttribute("relatedQuestions",relatedQuestions);
             model.addAttribute("questionDTO", questionDTO);
             model.addAttribute("user",defaultUser);
             model.addAttribute("commentDTOs",commentDTOs);
@@ -47,6 +49,8 @@ public class QuestionController {
         questionService.incView(id);   //更新阅读数
         List<CommentDTO> commentDTOs= commentService.ListByTargetId(id, CommentTypeEnum.QUESTION);
         QuestionDTO questionDTO = questionService.getQuesinfo(id);//根据id获取问题、用户信息
+        List<QuestionDTO> relatedQuestions=questionService.selectRelated(questionDTO);//获取相关问题信息
+        model.addAttribute("relatedQuestions",relatedQuestions);
         model.addAttribute("questionDTO", questionDTO);
         model.addAttribute("user",user);
         model.addAttribute("commentDTOs",commentDTOs);

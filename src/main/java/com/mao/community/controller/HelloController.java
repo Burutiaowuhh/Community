@@ -32,7 +32,7 @@ public class HelloController {
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "2") Integer size) {
+                        @RequestParam(name = "size", defaultValue = "6") Integer size) {
 
         PaginationDTO paginationDTO = questionService.list(page, size);
         model.addAttribute("paginationDTO", paginationDTO);
