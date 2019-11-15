@@ -4,7 +4,7 @@
 }
 
 .body-background {
-    background-image: url("img/bg.jpg");
+    background-image: url("/img/bg.jpg");
 }
 
 .font-color {
@@ -52,4 +52,51 @@
 }
 .jumbotron{
     margin: 50px;
+}
+.media-heading{
+    margin-top: 3px;
+}
+.textarea-form-control{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.comment-float-right-btn{
+    float: right;
+    margin-bottom: 10px;
+}
+.font-icon-style{
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.menu1{
+    color: #999999;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+.menu1 .icon{
+    margin-right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu1 .icon1{
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu1 .active{
+    color: #499ef3;
+}
+.menu1 .icon:hover{
+    color: #499ef3;
+}
+.menu1 .icon1:hover{
+    color: #499ef3;
+}
+.border{
+    border-bottom: 1px solid #eee;
+}
+.sub_comment_border{
+    padding: 10px;
+    border: 1px solid #cec4c4;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }

@@ -35,7 +35,7 @@ public class QuestionService {
         PaginationDTO paginationDTO = new PaginationDTO();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
-        Integer count =(int)questionMapper.countByExample(new QuestionExample());//获取问题总数
+        Integer count = (int) questionMapper.countByExample(new QuestionExample());//获取问题总数
 //        Integer totalcount = questionMapper.findtotalcount();
         paginationDTO.setPagination(count, page, size);  //用于获取页码信息
 
@@ -70,7 +70,7 @@ public class QuestionService {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
                 .andCreatorEqualTo(user.getId());
-        int totalcount = (int)questionMapper.countByExample(questionExample);
+        int totalcount = (int) questionMapper.countByExample(questionExample);
 //        Integer totalcount = questionMapper.findtotalCOuntbyuser(user.getId());
         paginationDTO.setPagination(totalcount, page, size);//获取页码信息
 
@@ -95,7 +95,7 @@ public class QuestionService {
         QuestionDTO questionDTO = new QuestionDTO();
         Question question = questionMapper.selectByPrimaryKey(id);
 
-        if(question==null){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         BeanUtils.copyProperties(question, questionDTO);
@@ -124,7 +124,7 @@ public class QuestionService {
             example.createCriteria()
                     .andIdEqualTo(question.getId());
             int i = questionMapper.updateByExampleSelective(updatequestion, example);
-            if(i!=1){
+            if (i != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
 //            questionMapper.update(question);
