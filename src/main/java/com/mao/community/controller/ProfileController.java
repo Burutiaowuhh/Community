@@ -41,6 +41,7 @@ public class ProfileController {
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
         }
+
         PaginationDTO paginationDTO = questionService.getquestionbyuserid(user, page, size);//用于获取页面信息paginationDTO（包括问题信息，页码，用户）
         model.addAttribute("paginationDTO", paginationDTO);
 

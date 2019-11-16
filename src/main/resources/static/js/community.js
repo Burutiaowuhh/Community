@@ -123,3 +123,21 @@ function collapseComments(e) {
     }
     console.log(id);
 }
+
+function showSelectTag() {
+    $("#select-tag").show();
+}
+
+function selectTag(e) {
+
+    var tagvalue = e.getAttribute("data-selectTag");
+
+    var previous = $("#tag").val();
+    if(previous.indexOf(tagvalue)==-1) {
+        if (previous) {
+            $("#tag").val(previous + ',' + tagvalue);
+        } else {
+            $("#tag").val(tagvalue);
+        }
+    }
+}

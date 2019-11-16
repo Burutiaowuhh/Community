@@ -9,6 +9,7 @@
     <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/shownav.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
 </head>
 <body class="body-background">
 <div th:insert="~{navigtion::shownav}"></div>
@@ -33,7 +34,27 @@
                 </div>
                 <div class="form-group">
                     <label for="tag">输入标签，以逗号分隔</label>
-                    <input type="text" class="form-control" id="tag" th:value="${tag}" name="tag" placeholder="添加标签">
+                    <input type="text" class="form-control" id="tag" th:value="${tag}" name="tag"
+                           autocomplete="off" placeholder="添加标签" onclick="showSelectTag()">
+
+                    <div th:id="select-tag" style="display: none" class="publish-tag-tab">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="selectCategory,selectCategoryStat:${tags}" th:class="${selectCategoryStat.first?'active':''}">
+                                <a th:href="${'#'+selectCategory.category}" aria-controls="home" role="tab" data-toggle="tab" th:text="${selectCategory.category}"></a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" th:class="${selectCategoryStat.first?'tab-pane active':'tab-pane'}" th:id="${selectCategory.category}" th:each="selectCategory:${tags}">
+                                <span class="label label-info question-tag publish-label-info" th:each="selectTag:${selectCategory.tags}" onclick="selectTag(this)" th:data-selectTag="${selectTag}">
+                                   <span class="glyphicon glyphicon-tag "></span>
+                                   <span class="label label-info tag-padding-left-right" th:text="${selectTag}"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="container-fluid main">

@@ -231,4 +231,17 @@ public class User {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", accountId='" + accountId + '\'' +
+                ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                '}';
+    }
 }

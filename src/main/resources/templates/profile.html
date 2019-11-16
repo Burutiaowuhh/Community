@@ -19,16 +19,24 @@
             <hr>
             <div class="media" th:each="question:${paginationDTO.questions}">
                 <div class="media-left">
-                    <a href="#">
+                    <a th:href="@{'/question/'+${question.id}}">
                         <img class="media-object img-rounded" th:src="${question.user.avatarUrl}" alt="你好啊">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
-                    <span th:text="${question.description}"></span><br>
-                    <span class="text-style"><span th:text="${question.commentCount}"/>个回复•<span
-                            th:text="${question.viewCount}"/>个浏览•<span
-                            th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                    </h4>
+
+                    <span class="text-style">
+                        <span th:text="${question.commentCount}"/>个回复•
+                        <span th:text="${question.viewCount}"/>个浏览•
+                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"/>
+                        <span>
+                            <a class="glyphicon glyphicon-pencil icon-font-color" th:href="@{'/publish/'+${question.id}}"
+                             th:if="${session.user!=null&&session.user.id==question.creator}">编辑</a>
+                        </span>
+                    </span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
