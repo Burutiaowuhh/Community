@@ -128,3 +128,7 @@
     margin: 5px 5px;
     display: inline-flex;
 }
+
+.badge-notification{
+    background-color: #ff0000;
+}
