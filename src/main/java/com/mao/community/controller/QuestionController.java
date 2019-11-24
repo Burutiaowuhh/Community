@@ -35,7 +35,7 @@ public class QuestionController {
         if (user == null) {
             model.addAttribute("error", "用户未登录");
             DefaultUser defaultUser=new DefaultUser();
-            defaultUser.setName("未登录");
+            defaultUser.setName("匿名用户");
             defaultUser.setAvatarUrl("/img/default.jpg");
             List<CommentDTO> commentDTOs= commentService.ListByTargetId(id, CommentTypeEnum.QUESTION);
             QuestionDTO questionDTO = questionService.getQuesinfo(id);//根据id获取问题、用户信息

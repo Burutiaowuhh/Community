@@ -6,11 +6,15 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.preview.css">
     <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/shownav.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
 
 </head>
 <body class="body-background">
@@ -27,7 +31,14 @@
                 阅读数：<span th:text="${questionDTO.viewCount}"/>
             </span>
                 <hr>
-                <span th:text="${questionDTO.description}"></span><br>
+                <div id="questoin-description-view">
+                    <textarea style="display:none;" th:text="${questionDTO.description}"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var testView = editormd.markdownToHTML("questoin-description-view", {});
+                    });
+                </script>
                 <hr>
 
                 <!--标签-->
