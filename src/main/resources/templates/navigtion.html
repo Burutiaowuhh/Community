@@ -32,8 +32,9 @@
                         <a href="/profile/replies" style="color: white">通知 <span class="badge badge-notification"  th:text="${session.unreadCount}"></span></a>
                     </li>
                     <li th:if="${session.user==null}">
-                        <a style="color: white;"
-                           href="https://github.com/login/oauth/authorize?client_id=3daee8956728aea3117c&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+                        <!--<a style="color: white;"-->
+                           <!--href="https://github.com/login/oauth/authorize?client_id=3daee8956728aea3117c&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>-->
+                        <a style="color: white;" th:href="@{https://github.com/login/oauth/authorize(client_id='3daee8956728aea3117c',redirect_uri=${#httpServletRequest.getServletContext().getAttribute('redirectUri')},scope='user',state=1)}">登录</a>
                     </li>
                     <li class="dropdown" th:if="${session.user!=null}">
                         <a href="#" onclick="bianyanse();" onblur="huanyuan();" id="bianyanse" class="dropdown-toggle"
